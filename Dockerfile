@@ -15,8 +15,7 @@ RUN apt update -y && apt upgrade -y  && \
 RUN pip3 install pyocr \
     Pillow \
     opencv-python \
-    gunicorn \
-    Flask
+    flask
 
 ENV PYTHONUNBUFFERED True
 
@@ -24,4 +23,4 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
 
-CMD exec gunicorn --bind :$PORT --workers 5 --threads 8 --timeout 0 src.main:app
+CMD ["python3", "./src/main.py"]
