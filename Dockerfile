@@ -15,9 +15,12 @@ RUN apt update -y && apt upgrade -y  && \
 RUN pip3 install pyocr \
     Pillow \
     opencv-python \
-    gunicorn \
-    Flask
+    flask
 
 ENV PYTHONUNBUFFERED True
 
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
 
+CMD ["python3", "./src/main.py"]
