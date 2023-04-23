@@ -14,4 +14,10 @@ RUN apt update -y && apt upgrade -y  && \
 
 RUN pip3 install pyocr \
     Pillow \
-    opencv-python
+    opencv-python \
+    gunicorn \
+    Flask
+
+ENV PYTHONUNBUFFERED True
+
+
