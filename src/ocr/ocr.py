@@ -1,7 +1,7 @@
 #ライブラリインポート
 import pyocr
 from PIL import Image, ImageEnhance
-from binary import binary
+from ocr.binary import binary
 
 
 def ocr(file_name):
