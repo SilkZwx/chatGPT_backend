@@ -10,6 +10,13 @@ from chat_gpt.chat_gpt import chatGPT
 
 app = Flask(__name__)
 
+@app.route('/test', methods=["POST"])
+def test():
+    data = request.get_json()
+    text = data.get("text")
+    text = chatGPT(text, "summarize")
+    return {"result": text}
+
 
 @app.route('/summarize', methods=["POST"])
 def summarize():
