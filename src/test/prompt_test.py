@@ -3,7 +3,7 @@ import sys
 sys.path.append("./src")
 from main import app
 
-def test_convert_text(uri):
+def test_convert_text():
     # テスト用のデータを用意
     text = "The present volume consists of chapters by participants in \
     the Language and Space conference held in Tucson, Arizona, 16-19 March 1994. \
@@ -17,16 +17,20 @@ def test_convert_text(uri):
     data = {"text": text}
     # テスト対象のエンドポイントをリクエスト
     client = app.test_client()
-    response = client.post(uri, json=data)
+    response = client.post("/summarize", json=data)
     result = response.get_json()["result"]
     print(result)
     # レスポンスのステータスコードが200であることを検証
     assert response.status_code == 200
-
+    assert isinstance(result, str)
+    
+    response = client.post("/translate", json=data)
+    result = response.get_json()["result"]
+    print(result)
+    # レスポンスのステータスコードが200であることを検証
+    assert response.status_code == 200
     assert isinstance(result, str)
 
 if __name__ == "__main__":
-    test_convert_text("/summarize")
-    test_convert_text("/translate")
-
+    test_convert_text()
 
