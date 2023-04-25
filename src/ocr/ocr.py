@@ -1,10 +1,10 @@
 #ライブラリインポート
 import pyocr
 from PIL import Image, ImageEnhance
-from binary import binary
+from ocr.binary import binary
 
 
-def ocr(file_name):
+def ocr(img):
     #OCRエンジン取得
     tools = pyocr.get_available_tools()
     tool = tools[0]
@@ -13,7 +13,7 @@ def ocr(file_name):
     builder = pyocr.builders.TextBuilder(tesseract_layout=6)
 
     #二値化処理
-    img = binary(file_name)
+    img = binary(img)
     #解析画像読み込み
     img = Image.fromarray(img) #他の拡張子でもOK
 

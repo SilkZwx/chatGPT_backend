@@ -15,7 +15,8 @@ RUN apt update -y && apt upgrade -y  && \
 RUN pip3 install pyocr \
     Pillow \
     opencv-python \
-    flask
+    flask \
+    openai
 
 ENV PYTHONUNBUFFERED True
 
