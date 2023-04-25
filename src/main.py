@@ -6,16 +6,26 @@ import cv2
 import io
 import base64
 from ocr.ocr import ocr as ocr_tesseract
+from chat_gpt.chat_gpt import chatGPT
 
 app = Flask(__name__)
 
-@app.route('/summarize')
-def summarize():
-    return {"task": "summarize"}
 
-@app.route('/translate')
+@app.route('/summarize', methods=["POST"])
+def summarize():
+    data = request.get_json()
+    text = data.get("text")
+    text = chatGPT(text, "summarize")
+
+    return {"result": text}
+
+@app.route('/translate', methods=["POST"])
 def translate():
-    return {"task": "translate"}
+    data = request.get_json()
+    text = data.get("text")
+    text = chatGPT(text, "translate")
+
+    return {"result": text}
 
 @app.route('/ocr', methods=["POST"])
 def ocr():

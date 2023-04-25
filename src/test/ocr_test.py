@@ -18,11 +18,11 @@ def test_ocr():
         "post_imgs": [img_base64]
     }
 
-    response = client.post('http://127.0.0.1:5050/ocr', json=data)
+    response = client.post('/ocr', json=data)
     assert response.status_code == 200
 
     results = response.get_json()["results"]
-    # print(results)
+    print(results)
     assert len(results) == 1
 
     txt = results[0]
