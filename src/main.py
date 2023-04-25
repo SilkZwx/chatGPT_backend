@@ -13,35 +13,38 @@ app = Flask(__name__)
 
 @app.route('/summarize', methods=["POST"])
 def summarize():
-    data = request.get_json()
-    text = data.get("text")
-    text = chatGPT(text, "summarize")
-
-    return {"result": text}
-
-@app.route('/translate', methods=["POST"])
-def translate():
-    data = request.get_json()
-    text = data.get("text")
-    text = chatGPT(text, "translate")
-
-    return {"result": text}
-
-@app.route('/ocr', methods=["POST"])
-def ocr():
     post_imgs = request.json["post_imgs"]
-    txts = []
+    option = request.json["option"]
+    txts = ""
     for i, img_base64 in enumerate(post_imgs):
         # Base64データをバイナリに変換
         img_binary = io.BytesIO(base64.b64decode(img_base64))
-        # PILライブラリを使って画像を読み込み
+        # ライブラリを使って画像を読み込み
         npimg = np.frombuffer(img_binary.getvalue(), dtype=np.uint8)
         img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
         
         txt = ocr_tesseract(img)
-        txts.append(txt)
-    # txts = ["txts"]
-    return {"results": txts}
+        txts += txt
+    
+    txts = chatGPT(txts, option)
+
+    return {"result": txts}
+
+@app.route('/translate', methods=["POST"])
+def translate():
+    img_base64 = request.json["post_img"]
+    option = request.json["option"]
+
+    img_binary = io.BytesIO(base64.b64decode(img_base64))
+
+    npimg = np.frombuffer(img_binary.getvalue(), dtype=np.uint8)
+    img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+
+    txt = ocr_tesseract(img)
+    txt = chatGPT(txt, option)
+
+    return {"result": txt}
+
 
 @app.route('/')
 def home():
