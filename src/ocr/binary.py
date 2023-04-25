@@ -3,10 +3,8 @@
 import cv2
 import numpy as np
 
-def binary(file_name):
-    #画像の読み込み
-    img = cv2.imread(file_name)
-
+def binary(img):
+    
     #グレースケール変換
     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 

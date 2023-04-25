@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 from flask import Flask, request
 import os
+import numpy as np
+import cv2
+import io
+import base64
 from ocr.ocr import ocr as ocr_tesseract
 
 app = Flask(__name__)
@@ -21,11 +25,12 @@ def ocr():
         # Base64データをバイナリに変換
         img_binary = io.BytesIO(base64.b64decode(img_base64))
         # PILライブラリを使って画像を読み込み
-        img = Image.open(img_binary)
+        npimg = np.frombuffer(img_binary.getvalue(), dtype=np.uint8)
+        img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
         
-        txt = ocr(img)
+        txt = ocr_tesseract(img)
         txts.append(txt)
-
+    # txts = ["txts"]
     return {"results": txts}
 
 @app.route('/')

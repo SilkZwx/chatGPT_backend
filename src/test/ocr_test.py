@@ -1,7 +1,10 @@
 import base64
 import io
 from PIL import Image
-from app import app
+import sys
+
+sys.path.append("./src")
+from main import app
 
 
 def test_ocr():
@@ -15,12 +18,18 @@ def test_ocr():
         "post_imgs": [img_base64]
     }
 
-    response = client.post('/ocr', json=data)
+    response = client.post('http://127.0.0.1:5050/ocr', json=data)
     assert response.status_code == 200
 
     results = response.get_json()["results"]
+    # print(results)
     assert len(results) == 1
 
     txt = results[0]
     assert isinstance(txt, str)
     assert len(txt) > 0
+
+
+if __name__ == "__main__":
+    test_ocr()
+
