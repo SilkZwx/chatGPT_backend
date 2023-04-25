@@ -29,7 +29,8 @@ jobs:
         Pillow \
         opencv-python \
         flask \
-        openai
+        openai \
+        pytest
     - name: test
       run: |
         pytest ./src/test/ocr_test.py
