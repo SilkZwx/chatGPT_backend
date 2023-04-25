@@ -7,7 +7,7 @@ sys.path.append("./src")
 from main import app
 
 
-def test_ocr():
+def test_translate():
     client = app.test_client()
     image_path = "image/sample.jpg"
 
@@ -15,21 +15,20 @@ def test_ocr():
         img_base64 = base64.b64encode(f.read()).decode()
 
     data = {
-        "post_imgs": [img_base64]
+        "post_img": img_base64,
+        "option" : "translate"
     }
 
-    response = client.post('/ocr', json=data)
+    response = client.post('/translate', json=data)
     assert response.status_code == 200
 
-    results = response.get_json()["results"]
-    print(results)
-    assert len(results) == 1
+    txt = response.get_json()["result"]
+    print(txt)
 
-    txt = results[0]
     assert isinstance(txt, str)
     assert len(txt) > 0
 
 
 if __name__ == "__main__":
-    test_ocr()
+    test_translate()
 

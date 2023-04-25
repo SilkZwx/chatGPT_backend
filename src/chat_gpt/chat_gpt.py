@@ -3,7 +3,7 @@ import openai #OpenAIのAPIを利用するために必要
 def get_prompt(option):
     prompt = ""
     if option == "summarize":
-        prompt = "translate it to japanese in few sentences"
+        prompt = "translate it to japanese in 100 words"
     elif option == "translate":
         prompt = "translate it to japanese"
     return prompt
