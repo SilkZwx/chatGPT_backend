@@ -5,7 +5,7 @@ def get_prompt(option):
     if option == "summarize":
         prompt = "translate it to japanese in 100 words"
     elif option == "translate":
-        prompt = "translate it to japanese"
+        prompt = "translate the readable parts only to japanese"
     return prompt
 
 
