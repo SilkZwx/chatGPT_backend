@@ -12,7 +12,7 @@ def get_prompt(option):
 def chatGPT(input_txt, option):
     if option == "translate":
         openai.api_key = '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'
-    else option == "summarize":
+    else:
         openai.api_key = "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"
     prompt = get_prompt(option)
     res = openai.ChatCompletion.create( # resにAPIのレスポンスが格納される
